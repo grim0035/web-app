@@ -6,6 +6,7 @@ An internal inventory control web app, for employees only, to keep track of fabr
 
 - dashboard for at a glance viewing
 - image of the item
+- colour/pattern
 - Cost per unit
 - Fiber/materials content (dropdown menu)
 - width of material (of fabric)
@@ -13,6 +14,7 @@ An internal inventory control web app, for employees only, to keep track of fabr
 - Purchase Location (for fabric - city, country etc)
 - Date purchased
 - Quantity purchased / remaining
+- statistics of most popular items (nice to have)
 
 ## Learning Goals
 
@@ -33,15 +35,31 @@ An internal inventory control web app, for employees only, to keep track of fabr
 
 ## Similar Applications
 
-- [] ()
+- [Megaventory] (http://www.megaventory.com/)
+Megaventory is a cloud-based app for large inventory systems. Allows for tracking inventory, sales and reports.
+
+**Differences**
+This application is more for larger manufacturers with multiple locations. My app will be focused on a single business.
 
 - [ikeepm] (https://www.ikeepm.com/)
 
-Ikeepm is a cloud-based inventory system for household items. Allows for lots of customiziation, sorting by type and ability to print reports.
+Ikeepm is another cloud-based inventory system for household items. Allows for lots of customiziation, sorting by type and ability to print reports.
 
 **Differences**
-This application is meant for household inventory tracking. My app will be for goods/materials for sale.
+This application is meant for household inventory tracking but lacks images for quick reference. My app will be for goods/materials for sale with an image of each product.
+
+- [] ()
+
+
+**Differences**
+This application .
+
+
 
 ## User Research
 
+Small business owner in the fashion/textiles industry.
 
+- needs to keep track of best-selling fabric items
+- needs an image of items for quick reference
+- needs to view on mobile device (iPhone) for comparison/shopping
