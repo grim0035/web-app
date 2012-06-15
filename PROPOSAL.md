@@ -34,9 +34,7 @@ An internal inventory control web app, for employees only, to keep track of fabr
 
 - [ikeepm] (https://www.ikeepm.com/)
 
-Ikeepm is a cloud-based inventory system for household items.
--
--
+Ikeepm is a cloud-based inventory system for household items
 
 ## User Research
 -
