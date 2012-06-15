@@ -4,6 +4,7 @@ An internal inventory control web app, for employees only, to keep track of fabr
 
 ## Features
 
+- dashboard for at a glance viewing
 - image of the item
 - Cost per unit
 - Fiber/materials content (dropdown menu)
@@ -32,11 +33,15 @@ An internal inventory control web app, for employees only, to keep track of fabr
 
 ## Similar Applications
 
+- [] ()
+
 - [ikeepm] (https://www.ikeepm.com/)
 
-Ikeepm is a cloud-based inventory system for household items
+Ikeepm is a cloud-based inventory system for household items. Allows for lots of customiziation, sorting by type and ability to print reports.
+
+**Differences**
+This application is meant for household inventory tracking. My app will be for goods/materials for sale.
 
 ## User Research
--
 
-    If you plan on being an Auditor, write a paragraph on why you would be good for your specialization
+
