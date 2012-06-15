@@ -49,13 +49,12 @@ Ikeepm is another cloud-based inventory system for household items. Allows for l
 **Differences**
 This application is meant for household inventory tracking but lacks images for quick reference. My app will be for goods/materials for sale with an image of each product.
 
-- [] ()
+- [clearlyinventory] (http://www.clearlyinventory.com/)
 
+An online inventory tracking system. very complex system. 
 
 **Differences**
-This application .
-
-
+My app will be streamlined and efficient.
 
 ## User Research
 
