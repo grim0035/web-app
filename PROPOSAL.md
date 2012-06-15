@@ -36,6 +36,7 @@ An internal inventory control web app, for employees only, to keep track of fabr
 ## Similar Applications
 
 - [Megaventory] (http://www.megaventory.com/)
+
 Megaventory is a cloud-based app for large inventory systems. Allows for tracking inventory, sales and reports.
 
 **Differences**
