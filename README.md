@@ -1,5 +1,5 @@
 web-app
 =======
 
-inventory control
+inventory control for LucyLou
 
