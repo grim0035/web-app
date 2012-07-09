@@ -17,4 +17,4 @@ no comment.
 no comment.
 
 #Did you have to radically alter something you’d finished previously?
-no.
+no. But added additional functionality for low-inventory warnings.
