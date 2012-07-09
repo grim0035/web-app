@@ -22,7 +22,7 @@
 
 		</select>	
 			
-		<label for="fibre-other">Other Fibre </label>
+		<label for="fibre-other">Other </label>
 		<input name="fibre-other" id="fibre-other"></input>
 
 		<label for="pattern">Color/Pattern</label>
@@ -33,6 +33,9 @@
 			<option value="54-inches">54 inches</option>
 			<option value="36-inches">36 inches</option>
 		</select>		
+		
+		<label for="width-other">Other</label>
+		<input name="width-other" id="width-other"></input>
 		
 		<label for="quantity">Quantity</label>
 		<input name="quantity" id="quantity"></input>
@@ -57,9 +60,7 @@
 		<input name="date-purchased" id="date-purchased"></input>
 		
 		<label for="notes">Notes</label>
-		<input type="text" name="notes" id="notes"></input>
-		
-		
+		<textarea name="notes" rows="5" cols="60"></textarea>		
 		<button type="submit">Save</button>
 
 	</form>
