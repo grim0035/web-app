@@ -1,8 +1,8 @@
 #What features have you accomplished in the past week?
-None.
+Wireframes.
 
 #Did you achieve the previous week’s goals?
-No.
+Wireframes were tested and modified based on feedback received.
 
 #What are your goals for this week?
 Write the application's code.
@@ -11,7 +11,7 @@ Write the application's code.
 Value of time management.
 
 #What parts of the application, in the past week, were enjoyable?
-no comment.
+Wireframe testing process, seeing how other users interacted with the application.
 
 #What parts of the application, in the past week, were frustrating?
 no comment.
