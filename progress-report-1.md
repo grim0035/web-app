@@ -8,7 +8,7 @@ Wireframes were tested and modified based on feedback received.
 Write the application's code.
 
 ##What concepts or techniques did you learn?
-Value of time management.
+How to use InDesign and AcrobatPro to make interactive wireframes. Value of time management.
 
 ##What parts of the application, in the past week, were enjoyable?
 Wireframe testing process, seeing how other users interacted with the application.
