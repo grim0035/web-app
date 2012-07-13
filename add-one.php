@@ -3,21 +3,31 @@
 $errors = array();
 
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
+$fibre_other = filter_input(INPUT_POST, 'fibre_other', FILTER_SANITIZE_STRING);
+$pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
+$width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (strlen($fabric_name) < 1  || strlen($fabric_name) > 255) {
 		$errors['fabric_name'] = true;	
 	}
 	
+	if (strlen($pattern) < 1  || strlen($pattern) > 55) {
+		$errors['pattern'] = true;	
+	}
 	
 	if (empty($errors)) {
 	// do DB stuff
 		require_once 'includes/db.php';
 		$sql = $db->prepare('
-		INSERT INTO incontrol (fabric_name)
-		VALUES (:fabric_name)
+		INSERT INTO incontrol (fabric_name, fibre_other, pattern, width_other)
+		VALUES (:fabric_name, :fibre_other, :pattern, :width_other)
 		'); 
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
+		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
+		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
+		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
 		$sql->execute();
 		
 		header('Location: index.php');
@@ -35,10 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 	<form method="post" action="add-one.php">
-		<label for="fabric_name">Fabric Name<?php if (isset($errors['fabric_name'])) : ?> <strong class="error">is required</strong><?php endif; ?></label>
+		
+		<label for="fabric_name">Fabric Name<?php if (isset($errors['fabric_name'])) : ?> <strong class="error"> is required</strong><?php endif; ?></label>
 		<input name="fabric_name" id="fabric_name" required value="<?php echo $fabric_name; ?>"></input>
+		
 		<label for="fibre_content">Fibre Content</label>
-		<select id="fibre-content" name="fibre_content">
+		<select id="fibre_content" name="fibre_content" >
 			<option value="Cotton">Cotton</option>
 			<option value="Polyester">Polyester</option>
 			<option value="Rayon">Rayon</option>
@@ -46,23 +58,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<option value="Wool">Wool</option>
 			<option value="Wool_Blend">Wool Blend</option>
 			<option value="Other">Other</option>
-
 		</select>	
 			
 		<label for="fibre_other">Other </label>
-		<input name="fibre_other" id="fibre_other"></input>
+		<input name="fibre_other" id="fibre_other" value="<?php echo $fibre_other; ?>"></input>
 
-		<label for="pattern">Color/Pattern</label>
-		<input name="pattern" id="pattern"></input>
+		<label for="pattern">Color/Pattern<?php if (isset($errors['pattern'])) : ?> <strong class="error"> is required</strong><?php endif; ?></label>
+		<input name="pattern" id="pattern" required value="<?php echo $pattern; ?>"></input>
 
 		<label for="width">Width</label>
 		<select id="width" name="width">
 			<option value="54_inches">54 inches</option>
 			<option value="36_inches">36 inches</option>
+			<option value="other">Other</option>
 		</select>		
 		
 		<label for="width_other">Other</label>
-		<input name="width_other" id="width_other"></input>
+		<input name="width_other" id="width_other" value="<?php echo $width_other; ?>">></input>
 		
 		<label for="quantity">Quantity</label>
 		<input name="quantity" id="quantity"></input>

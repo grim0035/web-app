@@ -64,7 +64,7 @@ $results = $sql->fetchAll(); //gets data from db
 	</table>
 
 <div class="buttons">
-<a href="add-inventory.php">Add Fabric</a>
+<a href="add-one.php">Add Fabric</a>
 </div>
 
 
