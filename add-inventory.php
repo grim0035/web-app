@@ -57,10 +57,10 @@
 		<input name="location" id="location"></input>
 		
 		<label for="date-purchased">Date Purchased</label>
-		<input name="date-purchased" id="date-purchased"></input>
+		<input name="date-purchased" id="date-purchased" value="YYYY-MM-DD"></input>
 		
 		<label for="notes">Notes</label>
-		<textarea name="notes" rows="5" cols="60"></textarea>		
+		<textarea name="notes" rows="5" cols="40"></textarea>		
 		<button type="submit">Save</button>
 
 	</form>
