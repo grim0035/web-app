@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		</select>
 		
 		<label for="cost">Cost ($CDN)</label>
-		<input name="cost" id="cost"  value="<?php echo $cost; ?>"></input>
+		<input name="cost" id="cost" value="<?php echo $cost; ?>"></input>
 		
 		<select id="c_units" name="c_units">
 		<option value="per_metre">per metre</option>
