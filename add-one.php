@@ -6,7 +6,10 @@ $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
 $fibre_other = filter_input(INPUT_POST, 'fibre_other', FILTER_SANITIZE_STRING);
 $pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
 $width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
+$quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
+$cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
 
+//var_dump($quantity);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (strlen($fabric_name) < 1  || strlen($fabric_name) > 255) {
@@ -17,17 +20,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$errors['pattern'] = true;	
 	}
 	
+	if (strlen($quantity) < 1  || strlen($quantity) > 5) { // check for numbers only and or 2 decimals only? 
+		$errors['quantity'] = true;	
+	}
+	
 	if (empty($errors)) {
-	// do DB stuff
+	// add to DB 
 		require_once 'includes/db.php';
 		$sql = $db->prepare('
-		INSERT INTO incontrol (fabric_name, fibre_other, pattern, width_other)
-		VALUES (:fabric_name, :fibre_other, :pattern, :width_other)
+		INSERT INTO incontrol (fabric_name, fibre_other, pattern, width_other, quantity, cost)
+		VALUES (:fabric_name, :fibre_other, :pattern, :width_other, :quantity, :cost)
 		'); 
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
 		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
 		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
 		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
+		$sql->bindValue(':quantity', $quantity, PDO::PARAM_INT);
+		$sql->bindValue(':cost', $cost, PDO::PARAM_INT);
 		$sql->execute();
 		
 		header('Location: index.php');
@@ -74,10 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		</select>		
 		
 		<label for="width_other">Other</label>
-		<input name="width_other" id="width_other" value="<?php echo $width_other; ?>">></input>
+		<input name="width_other" id="width_other" value="<?php echo $width_other; ?>"></input>
 		
-		<label for="quantity">Quantity</label>
-		<input name="quantity" id="quantity"></input>
+		<label for="quantity">Quantity<?php if (isset($errors['quantity'])) : ?> <strong class="error"> must be a number.</strong><?php endif; ?></label>
+		<input name="quantity" id="quantity" required value="<?php echo $quantity; ?>"></input>
 		
 		<select id="q_units" name="q_units">
 			<option value="metres">metres</option>
@@ -85,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		</select>
 		
 		<label for="cost">Cost ($CDN)</label>
-		<input name="cost" id="cost"></input>
+		<input name="cost" id="cost"  value="<?php echo $cost; ?>"></input>
 		
 		<select id="c_units" name="c_units">
 		<option value="per_metre">per metre</option>
