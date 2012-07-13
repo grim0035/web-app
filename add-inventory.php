@@ -1,4 +1,43 @@
-<!DOCTYPE HTML>
+<?php
+
+$errors = array();
+
+$movie_title = filter_input(INPUT_POST, 'movie_title', FILTER_SANITIZE_STRING);
+$release_date = filter_input(INPUT_POST, 'release_date', FILTER_SANITIZE_NUMBER_INT);
+$director = filter_input(INPUT_POST, 'director', FILTER_SANITIZE_STRING);
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	if (strlen($movie_title) < 1  || strlen($movie_title) > 256) {
+		$errors['movie_title'] = true;	
+	}
+	
+	if (strlen($release_date) < 4  || strlen($release_date) > 4) {
+		$errors['release_date'] = true;	
+	}
+	
+	if (strlen($director) < 1  || strlen($director) > 256) {
+		$errors['director'] = true;	
+	}
+
+	
+	if (empty($errors)) {
+	// do DB stuff
+		require_once 'includes/db.php';
+		$sql = $db->prepare('
+		INSERT INTO movies (movie_title, release_date, director)
+		VALUES (:movie_title, :release_date, :director)
+		'); 
+		$sql->bindValue(':movie_title', $movie_title, PDO::PARAM_STR);
+		$sql->bindValue(':release_date', $release_date, PDO::PARAM_INT);
+		$sql->bindValue(':director', $director, PDO::PARAM_STR);
+		$sql->execute();
+		
+		header('Location: index.php');
+		exit;
+	}
+}
+
+?><!DOCTYPE HTML>
 <html>
 <head>
 	<meta charset="utf-8">
