@@ -2,6 +2,16 @@
 
 $errors = array();
 
+$fibre_content = array(
+	'Cotton'
+	,'Polyester'
+	,'Rayon'
+	,'Silk'
+	,'Wool'
+	,'Wool_Blend'
+	,'Other'
+);
+
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
 $fibre_other = filter_input(INPUT_POST, 'fibre_other', FILTER_SANITIZE_STRING);
 $pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
@@ -9,10 +19,12 @@ $width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
 $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
 $cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
 $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
-$notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
 $date_purchased = filter_input(INPUT_POST, 'date_purchased', FILTER_SANITIZE_NUMBER_INT);
+$notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
 
-//var_dump($quantity);
+
+
+//var_dump($fibre_content);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (strlen($fabric_name) < 1  || strlen($fabric_name) > 255) {
@@ -31,18 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// add to DB 
 		require_once 'includes/db.php';
 		$sql = $db->prepare('
-		INSERT INTO incontrol (fabric_name, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes)
-		VALUES (:fabric_name, :fibre_other, :pattern, :width_other, :quantity, :cost, :location, :date_purchased :notes)
+		INSERT INTO incontrol (fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes)
+		VALUES (:fabric_name, :fibre_content, :fibre_other, :pattern, :width_other, :quantity, :cost, :location, :date_purchased :notes)
 		'); 
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
+		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_STR);
 		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
 		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
 		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
 		$sql->bindValue(':quantity', $quantity, PDO::PARAM_INT);
 		$sql->bindValue(':cost', $cost, PDO::PARAM_INT);
 		$sql->bindValue(':location', $location, PDO::PARAM_STR);
-		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
 		$sql->bindValue(':date_purchased', $date_purchased, PDO::PARAM_INT);
+		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
 		$sql->execute();
 		
 		header('Location: index.php');
@@ -66,13 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		
 		<label for="fibre_content">Fibre Content</label>
 		<select id="fibre_content" name="fibre_content" >
-			<option value="Cotton">Cotton</option>
-			<option value="Polyester">Polyester</option>
-			<option value="Rayon">Rayon</option>
-			<option value="Silk">Silk</option>
-			<option value="Wool">Wool</option>
-			<option value="Wool_Blend">Wool Blend</option>
-			<option value="Other">Other</option>
+			
+			<?php foreach ($fibre_content as $fibre_content => $value) : ?>
+			<option value="<?php echo $fibre_content; ?>"><?php echo $value; ?></option>
+				<?php endforeach; ?>
+			</select>
 		</select>	
 			
 		<label for="fibre_other">Other </label>
