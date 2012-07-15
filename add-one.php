@@ -8,6 +8,9 @@ $pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
 $width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
 $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
 $cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
+$location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
+$notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
+$date_purchased = filter_input(INPUT_POST, 'date_purchased', FILTER_SANITIZE_NUMBER_INT);
 
 //var_dump($quantity);
 
@@ -28,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// add to DB 
 		require_once 'includes/db.php';
 		$sql = $db->prepare('
-		INSERT INTO incontrol (fabric_name, fibre_other, pattern, width_other, quantity, cost)
-		VALUES (:fabric_name, :fibre_other, :pattern, :width_other, :quantity, :cost)
+		INSERT INTO incontrol (fabric_name, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes)
+		VALUES (:fabric_name, :fibre_other, :pattern, :width_other, :quantity, :cost, :location, :date_purchased :notes)
 		'); 
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
 		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
@@ -37,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
 		$sql->bindValue(':quantity', $quantity, PDO::PARAM_INT);
 		$sql->bindValue(':cost', $cost, PDO::PARAM_INT);
+		$sql->bindValue(':location', $location, PDO::PARAM_STR);
+		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
+		$sql->bindValue(':date_purchased', $date_purchased, PDO::PARAM_INT);
 		$sql->execute();
 		
 		header('Location: index.php');
@@ -102,13 +108,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		</select>
 		
 		<label for="location">Location Purchased</label>
-		<input name="location" id="location"></input>
+		<input name="location" id="location" value="<?php echo $location; ?>"></input>
 		
 		<label for="date_purchased">Date Purchased</label>
-		<input name="date_purchased" id="date_purchased" value="YYYY-MM-DD"></input>
+		<input name="date_purchased" id="date_purchased" value="<?php echo $date_purchased; ?>"></input>
 		
 		<label for="notes">Notes</label>
-		<textarea name="notes" rows="5" cols="40"></textarea>		
+		<textarea name="notes" rows="5" cols="40" value="<?php echo $notes; ?>"></textarea>		
 		<button type="submit">Save</button>
 
 	</form>
