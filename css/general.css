@@ -9,3 +9,7 @@ input, select{
 	margin: 0.5em 0.5em 1em 0;
 	display: block;
 }
+
+th, td {
+	padding: 0.5em 2em .05em 0;
+}

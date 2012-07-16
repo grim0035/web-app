@@ -72,6 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
+	<h1>Add a Fabric</h1>
+	<a href="index.php"><p>Cancel<p></a>
+
 	<form method="post" action="add-one.php">
 		
 		<label for="fabric_name">Fabric Name<?php if (isset($errors['fabric_name'])) : ?> <strong class="error"> is required</strong><?php endif; ?></label>
@@ -125,7 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<label for="notes">Notes</label>
 		<textarea name="notes" rows="5" cols="40" value="<?php echo $notes; ?>"></textarea>		
 		<button type="submit">Save</button>
-
 	</form>
 	
 </body>
