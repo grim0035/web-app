@@ -17,14 +17,14 @@ $fibre_other = filter_input(INPUT_POST, 'fibre_other', FILTER_SANITIZE_STRING);
 $pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
 $width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
 $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
-$cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
+$cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); 
 $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
 $date_purchased = filter_input(INPUT_POST, 'date_purchased', FILTER_SANITIZE_NUMBER_INT);
 $notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
 
 
-
 //var_dump($fibre_content);
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (strlen($fabric_name) < 1  || strlen($fabric_name) > 255) {
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$errors['pattern'] = true;	
 	}
 	
-	if (strlen($quantity) < 1  || strlen($quantity) > 5) { // check for numbers only and or 2 decimals only? 
+	if (strlen($quantity) < 1  || strlen($quantity) > 5) { // change this to check for numbers only 
 		$errors['quantity'] = true;	
 	}
 	
