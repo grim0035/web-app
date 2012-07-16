@@ -1,6 +1,7 @@
 <?php
 
 $errors = array();
+
 $fibre_content = array(
 	'Cotton'
 	,'Polyester'
@@ -10,7 +11,6 @@ $fibre_content = array(
 	,'Wool_Blend'
 	,'Other'
 );
-
 
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
 $fibre_other = filter_input(INPUT_POST, 'fibre_other', FILTER_SANITIZE_STRING);
@@ -44,10 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		require_once 'includes/db.php';
 		$sql = $db->prepare('
 		INSERT INTO incontrol (fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes)
-		VALUES (:fabric_name, :fibre_content, :fibre_other, :pattern, :width_other, :quantity, :cost, :location, :date_purchased, :notes)
+		VALUES (:fabric_name, :fibre_content, :fibre_other, :pattern, :width_other, :quantity, :cost, :location, :date_purchased :notes)
 		'); 
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
-		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_STR);		
+		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_STR);
 		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
 		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
 		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<select id="fibre_content" name="fibre_content" >
 			<?php foreach ($fibre_content as $key => $value) : ?>
 			<option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+
 				<?php endforeach; ?>
 		</select>	
 			
