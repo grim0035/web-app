@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9.2
+-- version 3.3.9
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 16, 2012 at 12:13 AM
--- Server version: 5.5.9
--- PHP Version: 5.3.6
+-- Generation Time: Jul 16, 2012 at 05:30 PM
+-- Server version: 5.5.8
+-- PHP Version: 5.3.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -25,35 +25,36 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `incontrol`
 --
 
-CREATE TABLE `incontrol` (
+CREATE TABLE IF NOT EXISTS `incontrol` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fabric_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `fibre_content` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `fibre_other` varchar(55) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `pattern` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `width` varchar(16) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `width_other` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `fabric_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `fibre_content` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
+  `fibre_other` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+  `pattern` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+  `width` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
+  `width_other` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `quantity` decimal(10,2) NOT NULL,
-  `q_units` varchar(16) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `q_units` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `cost` decimal(10,2) NOT NULL,
-  `c_units` varchar(16) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `location` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `c_units` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
+  `location` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date_purchased` date NOT NULL,
-  `notes` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `notes` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `incontrol`
 --
 
-INSERT INTO `incontrol` VALUES(1, 'test 1', '', 'other fabric', 'blue plaid', '', 'other width', 11.00, '', 2.00, '', '', '0000-00-00', '');
-INSERT INTO `incontrol` VALUES(2, 'test 2', '', '', 'blue stripes', '', '', 12.25, '', 9.50, '', '', '0000-00-00', '');
-INSERT INTO `incontrol` VALUES(3, 'blues test 3', '', '', 'blue paisley', '', '', 4.75, '', 0.00, '', 'montreal', '0000-00-00', 'misc scraps');
-INSERT INTO `incontrol` VALUES(4, 'notes', '', '', 'bluenotes', '', '', 5.00, '', 0.00, '', '', '0000-00-00', 'dgdhgd');
-INSERT INTO `incontrol` VALUES(5, 'dates', '', '', 'dates tooblue', '', '', 12.60, '', 0.00, '', '', '2012-01-01', '');
-INSERT INTO `incontrol` VALUES(6, 'fibre test', '', '', 'blue stripes', '', '', 3.60, '', 0.00, '', '', '0000-00-00', '');
-INSERT INTO `incontrol` VALUES(7, 'fibre 2', '', '', 'pattern test', '', '', 3.00, '', 0.00, '', '', '0000-00-00', '');
-INSERT INTO `incontrol` VALUES(8, 'fibrecontent 3', '', '', 'testpattern', '', '', 38.00, '', 0.00, '', '', '0000-00-00', '');
-INSERT INTO `incontrol` VALUES(9, 'fibre_content', '', '', 'fibre_content', '', '', 2323.00, '', 0.00, '', '', '0000-00-00', '');
-INSERT INTO `incontrol` VALUES(10, 'fibre_content2', 'Array', '', 'fibre_content2', '', '', 33.00, '', 0.00, '', '', '0000-00-00', '');
+INSERT INTO `incontrol` (`id`, `fabric_name`, `fibre_content`, `fibre_other`, `pattern`, `width`, `width_other`, `quantity`, `q_units`, `cost`, `c_units`, `location`, `date_purchased`, `notes`) VALUES
+(2, 'yellow polkadots', '', '', 'dots changed', '', '', '0.00', '', '0.00', '', '', '0000-00-00', 'polkadots notes'),
+(3, 'red stripes', '', '', 'red', '', '', '0.00', '', '0.00', '', '', '0000-00-00', ''),
+(4, 'blue', '', 'cotton wool blend', 'blue', '', '', '0.00', '', '0.00', '', '', '0000-00-00', ''),
+(5, 'blue 3', '', '', 'dots work 2', '', 'really wide', '0.00', '', '0.00', '', '', '0000-00-00', ''),
+(6, 'blue3333333', '', '', 'test works', '', 'test2', '10.02', '', '2.00', '', 'toronto', '1984-02-18', 'notes'),
+(7, 'blurple', '', 'other fibre 2', 'bluish purple', '', 'other width', '14.14', '', '2.43', '', 'new york city', '2112-02-02', 'my notes for blurple'),
+(8, 'fabric name1', '', 'blend', 'fabric colour', '', 'wider', '15.00', '', '4.00', '', 'new york', '1977-01-01', 'very bold unpopular leopard print'),
+(9, 'float test', '', '', 'paisley', '', '', '12.00', '', '0.00', '', 'ottawa', '0000-00-00', 'ottawa market'),
+(10, 'test', '', '', 'dots', '', '', '12.80', '', '0.00', '', '', '0000-00-00', 'test'),
+(11, 'new fabric name', 'Array', 'silk blend', 'black print', '', 'scraps', '2.00', '', '2.50', '', 'tokyo', '1999-09-01', 'dragonskin print form japan');
