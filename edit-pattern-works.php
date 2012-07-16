@@ -16,38 +16,25 @@ $notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if (strlen($fabric_name) < 1  || strlen($fabric_name) > 255) {
-		$errors['fabric_name'] = true;	
-	}
 	
-	if (strlen($pattern) < 1  || strlen($pattern) > 55) {
+	if (strlen($pattern) < 1  || strlen($pattern) > 255) {
 		$errors['pattern'] = true;	
 	}
 	
-	if (strlen($quantity) < 1  || strlen($quantity) > 5) { // change this to check for numbers only 
-		$errors['quantity'] = true;	
-	}
-	
+
 	if (empty($errors)) {
 	// add to DB 
 		require_once 'includes/db.php';
 		$sql = $db->prepare('
 		
 		UPDATE incontrol 
-		SET fabric_name = :fabric_name, fibre_other = :fibre_other, pattern = :pattern, width_other = :width_other, quantity = :quantity, cost = :cost, location = :location, date_purchased = :date_purchased, notes = :notes
+		SET pattern = :pattern
 		WHERE id = :id 
 
 		'); 
 		$sql->bindValue(':id', $id, PDO::PARAM_INT);
-		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
-		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
 		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
-		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
-		$sql->bindValue(':quantity', $quantity, PDO::PARAM_INT);
-		$sql->bindValue(':cost', $cost, PDO::PARAM_INT);
-		$sql->bindValue(':location', $location, PDO::PARAM_STR);
-		$sql->bindValue(':date_purchased', $date_purchased, PDO::PARAM_INT);
-		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
+
 		$sql->execute();
 		
 		header('Location: index.php');
@@ -64,7 +51,6 @@ $sql = $db->prepare('
 		$results = $sql->fetch();
 		
 		$fabric_name = $results['fabric_name'];
-		$fibre_other = $results['fibre_other'];
 		$pattern = $results['pattern'];
 		$width_other = $results['width_other'];
 		$quantity = $results['quantity'];
@@ -72,6 +58,8 @@ $sql = $db->prepare('
 		$location = $results['location'];
 		$date_purchased = $results['date_purchased'];
 		$notes = $results['notes'];
+
+
 }
 
 ?><!DOCTYPE HTML>
@@ -87,7 +75,7 @@ $sql = $db->prepare('
 	<p><a href="index.php">Cancel</a></p>
 	<form method="post" action="edit.php?id=<?php echo $id; ?>">
 		
-		<label for="fabric_name">Fabric Name<?php if (isset($errors['fabric_name'])) : ?> <strong class="error"> is required</strong><?php endif; ?></label>
+		<label for="fabric_name">Fabric Name</label>
 		<input name="fabric_name" id="fabric_name" required value="<?php echo $fabric_name; ?>"></input>
 		
 		<label for="fibre_content">Fibre Content</label>
@@ -111,7 +99,7 @@ $sql = $db->prepare('
 		<label for="width_other">Other</label>
 		<input name="width_other" id="width_other" value="<?php echo $width_other; ?>"></input>
 		
-		<label for="quantity">Quantity<?php if (isset($errors['quantity'])) : ?> <strong class="error"> must be a number.</strong><?php endif; ?></label>
+		<label for="quantity">Quantity</label>
 		<input name="quantity" id="quantity" required value="<?php echo $quantity; ?>"></input>
 		
 		<select id="q_units" name="q_units">
@@ -134,7 +122,7 @@ $sql = $db->prepare('
 		<input name="date_purchased" id="date_purchased" value="<?php echo $date_purchased; ?>"></input>
 		
 		<label for="notes">Notes</label>
-		<textarea name="notes" ><?php echo $notes; ?></textarea>		
+		<textarea name="notes" rows="5" cols="40" value="<?php echo $notes; ?>"></textarea>		
 		<button type="submit">Save</button>
 
 	</form>

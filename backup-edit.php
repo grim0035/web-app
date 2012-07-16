@@ -38,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		WHERE id = :id 
 
 		'); 
-		$sql->bindValue(':id', $id, PDO::PARAM_INT);
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
 		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
 		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
@@ -64,7 +63,6 @@ $sql = $db->prepare('
 		$results = $sql->fetch();
 		
 		$fabric_name = $results['fabric_name'];
-		$fibre_other = $results['fibre_other'];
 		$pattern = $results['pattern'];
 		$width_other = $results['width_other'];
 		$quantity = $results['quantity'];
@@ -72,6 +70,8 @@ $sql = $db->prepare('
 		$location = $results['location'];
 		$date_purchased = $results['date_purchased'];
 		$notes = $results['notes'];
+
+
 }
 
 ?><!DOCTYPE HTML>
@@ -134,7 +134,7 @@ $sql = $db->prepare('
 		<input name="date_purchased" id="date_purchased" value="<?php echo $date_purchased; ?>"></input>
 		
 		<label for="notes">Notes</label>
-		<textarea name="notes" ><?php echo $notes; ?></textarea>		
+		<textarea name="notes" rows="5" cols="40" value="<?php echo $notes; ?>"></textarea>		
 		<button type="submit">Save</button>
 
 	</form>
