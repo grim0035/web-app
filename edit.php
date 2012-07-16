@@ -106,7 +106,7 @@ $sql = $db->prepare('
 		<select id="fibre_content" name="fibre_content" >
 			
 				<?php foreach ($fibres as $key => $value) : ?>
-			<option value="<?php echo $key; ?>" <?php if (isset($fibres['selected'])) : ?> <?php endif; ?>><?php echo $value; ?></option>
+			<option value="<?php echo $key; ?>" <?php //if ($fibres == 1) : ?>selected<?php //endif; ?>><?php echo $value; ?></option> <!-- fix this 'if' statement to display results of selection stored in DB. -->
 				<?php endforeach; ?>
 		</select>	
 			
