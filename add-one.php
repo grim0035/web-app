@@ -1,7 +1,7 @@
 <?php
 
 $errors = array();
-$fibre_content = array(
+$fibres = array(
 	'Cotton'
 	,'Polyester'
 	,'Rayon'
@@ -13,6 +13,7 @@ $fibre_content = array(
 
 
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
+$fibre_content = filter_input(INPUT_POST, 'fibre_content', FILTER_SANITIZE_NUMBER_INT);
 $fibre_other = filter_input(INPUT_POST, 'fibre_other', FILTER_SANITIZE_STRING);
 $pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
 $width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
@@ -35,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$errors['pattern'] = true;	
 	}
 	
-	if (strlen($quantity) < 1  || strlen($quantity) > 5) { // change this to check for numbers only 
+	if (strlen($quantity) < 1  || strlen($quantity) > 8) { // change this to check for numbers only 
 		$errors['quantity'] = true;	
 	}
 	
@@ -47,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		VALUES (:fabric_name, :fibre_content, :fibre_other, :pattern, :width_other, :quantity, :cost, :location, :date_purchased, :notes)
 		'); 
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
-		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_STR);		
+		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_INT);		
 		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
 		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
 		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
@@ -82,9 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		
 		<label for="fibre_content">Fibre Content</label>
 		<select id="fibre_content" name="fibre_content" >
-			<?php foreach ($fibre_content as $key => $value) : ?>
-			<option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+			
+				<?php foreach ($fibres as $key => $value) : ?>
+			<option value="<?php echo $key; ?>" ><?php echo $value; ?></option>
 				<?php endforeach; ?>
+				
 		</select>	
 			
 		<label for="fibre_other">Other </label>

@@ -2,9 +2,19 @@
 require_once 'includes/db.php';
 
 $errors = array();
+$fibres = array(
+	'Cotton'
+	,'Polyester'
+	,'Rayon'
+	,'Silk'
+	,'Wool'
+	,'Wool_Blend'
+	,'Other'
+);
 
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
+$fibre_content = filter_input(INPUT_POST, 'fibre_content', FILTER_SANITIZE_NUMBER_INT);
 $fibre_other = filter_input(INPUT_POST, 'fibre_other', FILTER_SANITIZE_STRING);
 $pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
 $width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
@@ -24,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$errors['pattern'] = true;	
 	}
 	
-	if (strlen($quantity) < 1  || strlen($quantity) > 5) { // change this to check for numbers only 
+	if (strlen($quantity) < 1  || strlen($quantity) > 8) { // change this to check for numbers only 
 		$errors['quantity'] = true;	
 	}
 	
@@ -34,12 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$sql = $db->prepare('
 		
 		UPDATE incontrol 
-		SET fabric_name = :fabric_name, fibre_other = :fibre_other, pattern = :pattern, width_other = :width_other, quantity = :quantity, cost = :cost, location = :location, date_purchased = :date_purchased, notes = :notes
+		SET fabric_name = :fabric_name, fibre_content = :fibre_content, fibre_other = :fibre_other, pattern = :pattern, width_other = :width_other, quantity = :quantity, cost = :cost, location = :location, date_purchased = :date_purchased, notes = :notes
 		WHERE id = :id 
 
 		'); 
 		$sql->bindValue(':id', $id, PDO::PARAM_INT);
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
+		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_INT);
 		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
 		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
 		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
@@ -55,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 } else {
 $sql = $db->prepare('
-	SELECT fabric_name, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes
+	SELECT fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes
 	FROM incontrol
 	WHERE id = :id
 ');
@@ -64,6 +75,7 @@ $sql = $db->prepare('
 		$results = $sql->fetch();
 		
 		$fabric_name = $results['fabric_name'];
+		$fibre_content = $results['fibre_content'];
 		$fibre_other = $results['fibre_other'];
 		$pattern = $results['pattern'];
 		$width_other = $results['width_other'];
@@ -92,7 +104,10 @@ $sql = $db->prepare('
 		
 		<label for="fibre_content">Fibre Content</label>
 		<select id="fibre_content" name="fibre_content" >
-			<option value="fix this">choose</option>
+			
+				<?php foreach ($fibres as $key => $value) : ?>
+			<option value="<?php echo $key; ?>" <?php if (isset($fibres['selected'])) : ?> <?php endif; ?>><?php echo $value; ?></option>
+				<?php endforeach; ?>
 		</select>	
 			
 		<label for="fibre_other">Other </label>
