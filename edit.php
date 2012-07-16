@@ -1,17 +1,9 @@
 <?php
+require_once 'includes/db.php';
 
 $errors = array();
-$fibre_content = array(
-	'Cotton'
-	,'Polyester'
-	,'Rayon'
-	,'Silk'
-	,'Wool'
-	,'Wool_Blend'
-	,'Other'
-);
 
-
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
 $fibre_other = filter_input(INPUT_POST, 'fibre_other', FILTER_SANITIZE_STRING);
 $pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
@@ -21,9 +13,6 @@ $cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FL
 $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
 $date_purchased = filter_input(INPUT_POST, 'date_purchased', FILTER_SANITIZE_NUMBER_INT);
 $notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
-
-
-//var_dump($fibre_content);
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -43,11 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// add to DB 
 		require_once 'includes/db.php';
 		$sql = $db->prepare('
-		INSERT INTO incontrol (fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes)
-		VALUES (:fabric_name, :fibre_content, :fibre_other, :pattern, :width_other, :quantity, :cost, :location, :date_purchased, :notes)
+		
+		UPDATE incontrol 
+		SET fabric_name = :fabric_name, fibre_other = :fibre_other, pattern = :pattern, width_other = :width_other, quantity = :quantity, cost = :cost, location = :location, date_purchased = :date_purchased, notes = :notes
+		WHERE id = :id 
+
 		'); 
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
-		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_STR);		
 		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
 		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
 		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
@@ -61,27 +52,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		header('Location: index.php');
 		exit;
 	}
+} else {
+$sql = $db->prepare('
+	SELECT fabric_name, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes
+	FROM incontrol
+	WHERE id = :id
+');
+		$sql->bindValue(':id', $id, PDO::PARAM_INT);
+		$sql->execute();
+		$results = $sql->fetch();
+		
+		$fabric_name = $results['fabric_name'];
+		$pattern = $results['pattern'];
+		$width_other = $results['width_other'];
+		$quantity = $results['quantity'];
+		$cost = $results['cost'];
+		$location = $results['location'];
+		$date_purchased = $results['date_purchased'];
+		$notes = $results['notes'];
+
+
 }
 
 ?><!DOCTYPE HTML>
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Add Inventory &middot; InControl</title>
+	<title>Edit <?php echo $results['pattern'];?> &middot; InControl</title>
 	<link href="css/general.css" rel="stylesheet">
 </head>
 
 <body>
-	<form method="post" action="add-one.php">
+	<h1>Edit <?php echo $results['pattern'];?></h1>
+	<p><a href="index.php">Cancel</a></p>
+	<form method="post" action="edit.php?id=<?php echo $id; ?>">
 		
 		<label for="fabric_name">Fabric Name<?php if (isset($errors['fabric_name'])) : ?> <strong class="error"> is required</strong><?php endif; ?></label>
 		<input name="fabric_name" id="fabric_name" required value="<?php echo $fabric_name; ?>"></input>
 		
 		<label for="fibre_content">Fibre Content</label>
 		<select id="fibre_content" name="fibre_content" >
-			<?php foreach ($fibre_content as $key => $value) : ?>
-			<option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-				<?php endforeach; ?>
+			<option value="fix this">choose</option>
 		</select>	
 			
 		<label for="fibre_other">Other </label>

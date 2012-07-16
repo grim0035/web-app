@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 	<h1>Add a Fabric</h1>
-	<a href="index.php"><p>Cancel<p></a>
+	<p><a href="index.php">Cancel</a><p>
 
 	<form method="post" action="add-one.php">
 		
