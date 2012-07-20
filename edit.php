@@ -3,7 +3,8 @@ require_once 'includes/db.php';
 
 $errors = array();
 $fibres = array(
-	'Cotton'
+	'Select'
+	,'Cotton'
 	,'Polyester'
 	,'Rayon'
 	,'Silk'
@@ -106,7 +107,14 @@ $sql = $db->prepare('
 		<select id="fibre_content" name="fibre_content" >
 			
 				<?php foreach ($fibres as $key => $value) : ?>
-			<option value="<?php echo $key; ?>" <?php //if ($fibres == 1) : ?>selected<?php //endif; ?>><?php echo $value; ?></option> <!-- fix this 'if' statement to display results of selection stored in DB. -->
+			<option value="<?php echo $key; ?>" 	   
+			
+			<?php
+				if($fibres['fibre_content'] == '1')
+			echo ("selected=\"selected\"");
+			?>
+>
+	   <?php echo $row['whateveragain']?>><?php echo $value; ?></option> <!-- fix this 'if' statement to display results of selection stored in DB. -->
 				<?php endforeach; ?>
 		</select>	
 			

@@ -2,7 +2,8 @@
 
 $errors = array();
 $fibres = array(
-	'Cotton'
+	'Select'
+	,'Cotton'
 	,'Polyester'
 	,'Rayon'
 	,'Silk'

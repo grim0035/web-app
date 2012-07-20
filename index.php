@@ -61,7 +61,11 @@ $results = $sql->fetchAll(); //gets data from db
 			<tr>
 				<td scope="col">preview image</td>
 				<td scope="col"><a href="edit.php?id=<?php echo $fabric['id']; ?>"><?php echo $fabric['fabric_name']; ?></a></td>
-				<td scope="col"></td>
+				<td scope="col">	
+				
+					<?php //echo $fabric['fibre_content']; ?>
+
+				</td>
 				<td scope="col"><?php echo $fabric['fibre_other']; ?></td>
 				<td scope="col"><a href="edit.php?id=<?php echo $fabric['id']; ?>"><?php echo $fabric['pattern']; ?></a></td>
 				<td scope="col"></td>
