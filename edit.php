@@ -107,14 +107,16 @@ $sql = $db->prepare('
 		<select id="fibre_content" name="fibre_content" >
 			
 				<?php foreach ($fibres as $key => $value) : ?>
-			<option value="<?php echo $key; ?>" 	   
-			
-			<?php
-				if($fibres['fibre_content'] == '1')
-			echo ("selected=\"selected\"");
+			<option value="	<?php echo $key; ?>
+			<?php if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+ 					if (isset($fibres)) {
+						echo $key;
+					}
+				}
 			?>
->
-	   <?php echo $row['whateveragain']?>><?php echo $value; ?></option> <!-- fix this 'if' statement to display results of selection stored in DB. -->
+
+			
+			">	<?php echo $value; ?> </option> <!-- fix this 'if' statement to display results of selection stored in DB. -->
 				<?php endforeach; ?>
 		</select>	
 			
