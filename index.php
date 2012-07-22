@@ -1,9 +1,9 @@
 <?php
-
+require_once 'selected.php';
 require_once 'includes/db.php';
 //pointer to db
 $sql = $db->query('
-	SELECT id, fabric_name, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes
+	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes
 	FROM incontrol
 	ORDER BY cost ASC
 ');
@@ -62,10 +62,8 @@ $results = $sql->fetchAll(); //gets data from db
 				<td scope="col">preview image</td>
 				<td scope="col"><a href="edit.php?id=<?php echo $fabric['id']; ?>"><?php echo $fabric['fabric_name']; ?></a></td>
 				<td scope="col">	
-				
-					<?php //echo $fabric['fibre_content']; ?>
-
-				</td>
+				<?php echo $fibres[$fabric['fibre_content']] ?>
+				</td>	
 				<td scope="col"><?php echo $fabric['fibre_other']; ?></td>
 				<td scope="col"><a href="edit.php?id=<?php echo $fabric['id']; ?>"><?php echo $fabric['pattern']; ?></a></td>
 				<td scope="col"></td>

@@ -1,16 +1,7 @@
 <?php
+require_once 'selected.php';
 
 $errors = array();
-$fibres = array(
-	'Select'
-	,'Cotton'
-	,'Polyester'
-	,'Rayon'
-	,'Silk'
-	,'Wool'
-	,'Wool_Blend'
-	,'Other'
-);
 
 
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
