@@ -7,7 +7,7 @@ require_once 'selected.php';
 
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
-$fibre_content = filter_input(INPUT_POST, 'fibre_content', FILTER_SANITIZE_NUMBER_INT);
+$fibre_content = filter_input(INPUT_POST, 'fibre_content', FILTER_SANITIZE_STRING);
 $fibre_other = filter_input(INPUT_POST, 'fibre_other', FILTER_SANITIZE_STRING);
 $pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
 $width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		'); 
 		$sql->bindValue(':id', $id, PDO::PARAM_INT);
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
-		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_INT);
+		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_STR);
 		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
 		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
 		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
@@ -97,12 +97,14 @@ $sql = $db->prepare('
 		
 		<label for="fibre_content">Fibre Content</label>
 		<select id="fibre_content" name="fibre_content" >
+   			<?php foreach ($fibres as $key => $value) : ?>
 			
-				<?php foreach ($fibres as $key => $value) : ?>
-			<option value=" 
-			<?php echo $key; ?>
-			
-			">	<?php echo $fibres[$results['fibre_content']]; ?></option> <!-- $value = array, $results['fibre_content'] = db entry. -->
+			<option value="<?php echo $key;?>">	
+			 <?php echo $value;
+			 ?>
+			 			 <?php // echo $fibres[$results['fibre_content']]; // this spits out only db entry in a loop?>
+
+			</option> <!-- $value = array, $results['fibre_content'] = db entry. -->
 				<?php endforeach; ?>
 		</select>	
 			
