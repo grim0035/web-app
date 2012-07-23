@@ -4,7 +4,6 @@ require_once 'selected.php';
 
 $errors = array();
 
-
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
 $fibre_content = filter_input(INPUT_POST, 'fibre_content', FILTER_SANITIZE_NUMBER_INT);
@@ -13,7 +12,9 @@ $pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
 $width = filter_input(INPUT_POST, 'width', FILTER_SANITIZE_NUMBER_INT);
 $width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
 $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
-$cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); 
+$q_units = filter_input(INPUT_POST, 'q_units', FILTER_SANITIZE_NUMBER_INT); 
+$cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+$c_units = filter_input(INPUT_POST, 'c_units', FILTER_SANITIZE_NUMBER_INT); 
 $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
 $date_purchased = filter_input(INPUT_POST, 'date_purchased', FILTER_SANITIZE_NUMBER_INT);
 $notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
@@ -38,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$sql = $db->prepare('
 		
 		UPDATE incontrol 
-		SET fabric_name = :fabric_name, fibre_content = :fibre_content, fibre_other = :fibre_other, pattern = :pattern, width = :width, width_other = :width_other, quantity = :quantity, cost = :cost, location = :location, date_purchased = :date_purchased, notes = :notes
+		SET fabric_name = :fabric_name, fibre_content = :fibre_content, fibre_other = :fibre_other, pattern = :pattern, width = :width, width_other = :width_other, quantity = :quantity, q_units = :q_units, cost = :cost, c_units = :c_units, location = :location, date_purchased = :date_purchased, notes = :notes
 		WHERE id = :id 
 
 		'); 
@@ -50,7 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$sql->bindValue(':width', $width, PDO::PARAM_INT);
 		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
 		$sql->bindValue(':quantity', $quantity, PDO::PARAM_INT);
+		$sql->bindValue(':q_units', $q_units, PDO::PARAM_INT);
 		$sql->bindValue(':cost', $cost, PDO::PARAM_INT);
+		$sql->bindValue(':c_units', $c_units, PDO::PARAM_INT);		
 		$sql->bindValue(':location', $location, PDO::PARAM_STR);
 		$sql->bindValue(':date_purchased', $date_purchased, PDO::PARAM_INT);
 		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
@@ -61,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 } else {
 $sql = $db->prepare('
-	SELECT fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, cost, location, date_purchased, notes
+	SELECT fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes
 	FROM incontrol
 	WHERE id = :id
 ');
@@ -69,17 +72,19 @@ $sql = $db->prepare('
 		$sql->execute();
 		$results = $sql->fetch();
 		
-		$fabric_name = $results['fabric_name'];
-		$fibre_content = $results['fibre_content'];
-		$fibre_other = $results['fibre_other'];
-		$pattern = $results['pattern'];
-		$width = $results['width'];
-		$width_other = $results['width_other'];
-		$quantity = $results['quantity'];
-		$cost = $results['cost'];
-		$location = $results['location'];
-		$date_purchased = $results['date_purchased'];
-		$notes = $results['notes'];
+		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
+		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_INT);		
+		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
+		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
+		$sql->bindValue(':width', $width, PDO::PARAM_INT);				
+		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
+		$sql->bindValue(':quantity', $quantity, PDO::PARAM_INT);
+		$sql->bindValue(':q_units', $q_units, PDO::PARAM_INT);		
+		$sql->bindValue(':cost', $cost, PDO::PARAM_INT);
+		$sql->bindValue(':c_units', $c_units, PDO::PARAM_INT);
+		$sql->bindValue(':location', $location, PDO::PARAM_STR);
+		$sql->bindValue(':date_purchased', $date_purchased, PDO::PARAM_INT);
+		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
 }
 
 ?><!DOCTYPE HTML>
@@ -91,6 +96,9 @@ $sql = $db->prepare('
 </head>
 
 <body>
+<div class="wrapper">
+	<div class="dashboard">
+		<h2>InControl > Inventory</h2>
 	<h1>Edit <?php echo $results['pattern'];?></h1>
 	<p><a href="index.php">Cancel</a></p>
 	<form method="post" action="edit.php?id=<?php echo $id; ?>">
@@ -130,17 +138,23 @@ $sql = $db->prepare('
 		<input name="quantity" id="quantity" required value="<?php echo $quantity; ?>"></input>
 		
 		<select id="q_units" name="q_units">
-			<option value="metres">metres</option>
-			<option value="yards">yards</option>
-		</select>
+		<?php foreach ($quantity_units as $key => $value) : ?>
+			<option value="<?php echo $key; ?>">	
+			 <?php echo $value;?>
+			</option> 
+				<?php endforeach; ?>
+		</select>	
 		
 		<label for="cost">Cost ($CDN)</label>
 		<input name="cost" id="cost" value="<?php echo $cost; ?>"></input>
 		
 		<select id="c_units" name="c_units">
-		<option value="per_metre">per metre</option>
-		<option value="per_yard">per yard</option>
-		</select>
+		<?php foreach ($cost_units as $key => $value) : ?>
+			<option value="<?php echo $key; ?>">	
+			 <?php echo $value;?>
+			</option> 
+				<?php endforeach; ?>
+		</select>	
 		
 		<label for="location">Location Purchased</label>
 		<input name="location" id="location" value="<?php echo $location; ?>"></input>
@@ -153,6 +167,7 @@ $sql = $db->prepare('
 		<button type="submit">Save</button>
 
 	</form>
-	
+	</div>
+</div>
 </body>
 </html>

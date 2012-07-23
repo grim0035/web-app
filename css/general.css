@@ -3,6 +3,7 @@
 
 html {
 	background-color: #dce6f2;
+	color:#444;
 	font: 100% normal Verdana, Geneva, sans-serif;
 }
 
@@ -10,26 +11,60 @@ input, select{
 	margin: 0.5em 0.5em 1em 0;
 	display: block;
 }
+
 div.wrapper{
 	background: #dce6f2 url(../images/lucylou-logo.jpg) no-repeat;
-}
-
-table#dashboard {
+	top: 20px;
+	left:20px;
 	margin: 0 auto;
-	padding: 12px;
-	border: 0;
-	background-color: #fff;
-	
+	width:75%;
+	position: relative;
 }
 
-table#dashboard > caption {
+h2 {
 	color:#20409a;
 	font-size: 2em;
 	font-weight: bold;
+	margin: -80px 0 40px 0;
+
+	text-align:center;
+}
+
+div.dashboard {
+	margin: 0 auto;
+	padding: 20px;
+	border: 0;
+	background-color: #fff;
+	position:inherit;
+	top: 275px;
+	border: 2px solid #fff;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+}
+
+table.dashboard {
+	margin: 0 auto;
+	padding: 20px;
+	border: 0;
+	background-color: #fff;
+	position:inherit;
+	top: 200px;
+	border: 2px solid #fff;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+}
+
+table.dashboard > caption {
+	color:#20409a;
+	font-size: 2em;
+	font-weight: bold;
+	margin-bottom: 0.5em;
 }
 
 th, td {
-	padding: 0.5em 2em .05em 0;
+	padding: 0.5em 2em .05em 0.5em;
 	border: 0;
 }
 

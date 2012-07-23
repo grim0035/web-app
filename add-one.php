@@ -11,7 +11,9 @@ $pattern = filter_input(INPUT_POST, 'pattern', FILTER_SANITIZE_STRING);
 $width = filter_input(INPUT_POST, 'width', FILTER_SANITIZE_NUMBER_INT);
 $width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
 $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
+$q_units = filter_input(INPUT_POST, 'q_units', FILTER_SANITIZE_NUMBER_INT); 
 $cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); 
+$c_units = filter_input(INPUT_POST, 'c_units', FILTER_SANITIZE_NUMBER_INT); 
 $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
 $date_purchased = filter_input(INPUT_POST, 'date_purchased', FILTER_SANITIZE_NUMBER_INT);
 $notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
@@ -37,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// add to DB 
 		require_once 'includes/db.php';
 		$sql = $db->prepare('
-		INSERT INTO incontrol (fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, cost, location, date_purchased, notes)
-		VALUES (:fabric_name, :fibre_content, :fibre_other, :pattern, :width, :width_other, :quantity, :cost, :location, :date_purchased, :notes)
+		INSERT INTO incontrol (fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes)
+		VALUES (:fabric_name, :fibre_content, :fibre_other, :pattern, :width, :width_other, :quantity, :q_units, :cost, :c_units, :location, :date_purchased, :notes)
 		'); 
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
 		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_INT);		
@@ -47,7 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$sql->bindValue(':width', $width, PDO::PARAM_INT);				
 		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
 		$sql->bindValue(':quantity', $quantity, PDO::PARAM_INT);
+		$sql->bindValue(':q_units', $q_units, PDO::PARAM_INT);		
 		$sql->bindValue(':cost', $cost, PDO::PARAM_INT);
+		$sql->bindValue(':c_units', $cost, PDO::PARAM_INT);
 		$sql->bindValue(':location', $location, PDO::PARAM_STR);
 		$sql->bindValue(':date_purchased', $date_purchased, PDO::PARAM_INT);
 		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
@@ -67,6 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
+<div class="wrapper">
+	<div class="dashboard">
+		<h2>InControl > Inventory</h2>	
 	<h1>Add a Fabric</h1>
 	<p><a href="index.php">Cancel</a><p>
 
@@ -106,8 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<input name="quantity" id="quantity" required value="<?php echo $quantity; ?>"></input>
 		
 		<select id="q_units" name="q_units">
-			<option value="metres">metres</option>
-			<option value="yards">yards</option>
+		<?php foreach ($quantity_units as $key => $value) : ?>
+			<option value="<?php echo $key; ?>">	
+			 <?php echo $value;?>
+			</option> 
+				<?php endforeach; ?>
 		</select>
 		
 		<label for="cost">Cost ($CDN)</label>
@@ -131,6 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<textarea name="notes" value="<?php echo $notes; ?>"></textarea>		
 		<button type="submit">Save</button>
 	</form>
-	
+	</div>
+</div>	
 </body>
 </html>

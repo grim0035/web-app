@@ -6,13 +6,13 @@ require_once 'selected.php';
 
 
 $sql = $db->query('
-	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, cost, location, date_purchased, notes
+	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes
 	FROM incontrol
 	ORDER BY cost ASC
 ');
 
 $sort_cost = $db->query('
-	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes
+	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes
 	FROM incontrol
 	ORDER BY cost DESC
 ');
@@ -29,8 +29,8 @@ $results = $sql->fetchAll(); //gets data from db
 </head>
 <body>
 <div class="wrapper">
-	<table id="dashboard">
-		<caption>Inventory Control</caption> <!-- summary for the table-->
+	<table class="dashboard">
+		<caption>InControl > Inventory</caption> <!-- summary for the table-->
 			<colgroup>
 				<col>
 				<col>
@@ -78,9 +78,9 @@ $results = $sql->fetchAll(); //gets data from db
 				<td scope="col"><?php echo $widths[$fabric['width']] ?></td>
 				<td scope="col"><?php echo $fabric['width_other']; ?></td>
 				<td scope="col"><?php echo $fabric['quantity']; ?></td>
-				<td scope="col"></td>
+				<td scope="col"><?php echo $quantity_units[$fabric['q_units']] ?></td>
 				<td scope="col"><?php echo $fabric['cost']; ?></td>
-				<td scope="col"></td>
+				<td scope="col"><?php echo $cost_units[$fabric['c_units']] ?></td>
 				<td scope="col"><?php echo $fabric['location']; ?></td>
 				<td scope="col"><?php echo $fabric['date_purchased']; ?></td>
 				<td scope="col"><?php echo $fabric['notes']; ?></td>

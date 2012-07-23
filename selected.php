@@ -17,8 +17,14 @@ $widths = array(
 	,'other'
 );
 
+$quantity_units = array(
+	'yards'
+	,'metres'
+);
+
 $cost_units = array(
 	'per yard'
 	,'per metre'
 );
+
 
