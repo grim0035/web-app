@@ -1,13 +1,22 @@
 <?php
-require_once 'selected.php';
 require_once 'includes/db.php';
+require_once 'selected.php';
+
 //pointer to db
 
+
 $sql = $db->query('
-	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes
+	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, cost, location, date_purchased, notes
 	FROM incontrol
 	ORDER BY cost ASC
 ');
+
+$sort_cost = $db->query('
+	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, cost, location, date_purchased, notes
+	FROM incontrol
+	ORDER BY cost DESC
+');
+
 $results = $sql->fetchAll(); //gets data from db
 
 ?>
@@ -19,8 +28,8 @@ $results = $sql->fetchAll(); //gets data from db
 	<link href="css/general.css" rel="stylesheet">
 </head>
 <body>
-
-	<table>
+<div class="wrapper">
+	<table id="dashboard">
 		<caption>Inventory Control</caption> <!-- summary for the table-->
 			<colgroup>
 				<col>
@@ -42,7 +51,7 @@ $results = $sql->fetchAll(); //gets data from db
 			<tr>
 				<!-- table =scope defines what direction the <th> is labelling: col or row -->
 				<th scope="col">Preview</th>
-				<th scope="col"><a href="?sort_name">Name</a></th>
+				<th scope="col"><a href="index.php?sort_name=desc">Name</a></th>
 				<th scope="col">Fibre Content</th>
 				<th scope="col">Other</th>
 				<th scope="col">Pattern</th>
@@ -57,24 +66,24 @@ $results = $sql->fetchAll(); //gets data from db
 				<th scope="col">Notes</th>
 			</tr>
 		</thead>
-		<?php foreach ($results as $results) :?>
+		<?php foreach ($results as $fabric) :?>
 			<tr>
 				<td scope="col">preview image</td>
-				<td scope="col"><a href="edit.php?id=<?php echo $results['id']; ?>"><?php echo $results['fabric_name']; ?></a></td>
+				<td scope="col"><a href="edit.php?id=<?php echo $fabric['id']; ?>"><?php echo $fabric['fabric_name']; ?></a></td>
 				<td scope="col">	
-				<?php echo $fibres[$results['fibre_content']] ?>
+				<?php echo $fibres[$fabric['fibre_content']] ?>
 				</td>	
-				<td scope="col"><?php echo $results['fibre_other']; ?></td>
-				<td scope="col"><a href="edit.php?id=<?php echo $results['id']; ?>"><?php echo $results['pattern']; ?></a></td>
+				<td scope="col"><?php echo $fabric['fibre_other']; ?></td>
+				<td scope="col"><a href="edit.php?id=<?php echo $fabric['id']; ?>"><?php echo $fabric['pattern']; ?></a></td>
+				<td scope="col"><?php echo $widths[$fabric['width']] ?></td>
+				<td scope="col"><?php echo $fabric['width_other']; ?></td>
+				<td scope="col"><?php echo $fabric['quantity']; ?></td>
 				<td scope="col"></td>
-				<td scope="col"><?php echo $results['width_other']; ?></td>
-				<td scope="col"><?php echo $results['quantity']; ?></td>
+				<td scope="col"><?php echo $fabric['cost']; ?></td>
 				<td scope="col"></td>
-				<td scope="col"><?php echo $results['cost']; ?></td>
-				<td scope="col"></td>
-				<td scope="col"><?php echo $results['location']; ?></td>
-				<td scope="col"><?php echo $results['date_purchased']; ?></td>
-				<td scope="col"><?php echo $results['notes']; ?></td>
+				<td scope="col"><?php echo $fabric['location']; ?></td>
+				<td scope="col"><?php echo $fabric['date_purchased']; ?></td>
+				<td scope="col"><?php echo $fabric['notes']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 		<tfoot> <!-- table header cells -->
@@ -86,6 +95,6 @@ $results = $sql->fetchAll(); //gets data from db
 			</tr>
 		</tfoot>
 	</table>
-
+</div>
 </body>
 </html>
