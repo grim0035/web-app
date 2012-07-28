@@ -72,19 +72,21 @@ $sql = $db->prepare('
 		$sql->execute();
 		$results = $sql->fetch();
 		
-		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
-		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_INT);		
-		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
-		$sql->bindValue(':pattern', $pattern, PDO::PARAM_STR);
-		$sql->bindValue(':width', $width, PDO::PARAM_INT);				
-		$sql->bindValue(':width_other', $width_other, PDO::PARAM_STR);
-		$sql->bindValue(':quantity', $quantity, PDO::PARAM_INT);
-		$sql->bindValue(':q_units', $q_units, PDO::PARAM_INT);		
-		$sql->bindValue(':cost', $cost, PDO::PARAM_INT);
-		$sql->bindValue(':c_units', $c_units, PDO::PARAM_INT);
-		$sql->bindValue(':location', $location, PDO::PARAM_STR);
-		$sql->bindValue(':date_purchased', $date_purchased, PDO::PARAM_INT);
-		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
+		$fabric_name = $results['fabric_name'];
+		$fibre_content = $results['fibre_content'];
+		$fibre_content = $results['fibre_other'];
+		$pattern = $results['pattern'];
+		$width = $results['width'];
+		$width_other = $results['width_other'];
+		$quantity = $results['quantity'];
+		$quantity = $results['quantity'];
+		$q_units = $results['q_units'];		
+		$cost = $results['cost'];
+		$c_units = $results['c_units'];		
+		$location = $results['location'];
+		$date_purchased = $results['date_purchased'];
+		$notes = $results['notes'];
+
 }
 
 ?><!DOCTYPE HTML>
