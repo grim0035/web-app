@@ -121,7 +121,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<input name="date_purchased" id="date_purchased" value="<?php echo $date_purchased; ?>"></input>
 		
 		<label for="notes">Notes</label>
-		<textarea name="notes" value="<?php echo $notes; ?>"></textarea>		
+		<textarea name="notes" value="<?php echo $notes; ?>"></textarea>
+		
+		<input type="file" name="image">
+		 		
 		<button type="submit">Save</button>
 	</form>
 	

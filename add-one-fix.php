@@ -5,24 +5,11 @@ $errors = array();
  
  //This is the directory where images will be saved 
  $target = "images/"; 
- $target = $target . basename( $_FILES['preview']['name']); 
+ $target = $target . basename( $_FILES['preview']); 
  
  //This gets all the other information from the form 
- $image=($_FILES['preview']['name']);  
-  
- //Writes the photo to the server 
- if(move_uploaded_file($_FILES['preview']['tmp_name'], $target)) 
- { 
+ $image=($_FILES['preview']);  
  
- //Tells you if its all ok 
- echo "The file ". basename( $_FILES['uploadedfile']['name']). " has been uploaded, and your information has been added to the directory"; 
- } 
- else { 
- 
- //Gives and error if its not 
- echo "Sorry, there was a problem uploading your file."; 
- } 
-
 
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
 $fibre_content = filter_input(INPUT_POST, 'fibre_content', FILTER_SANITIZE_NUMBER_INT);
@@ -51,6 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 	if (strlen($quantity) < 1  || strlen($quantity) > 8) { // change this to check for numbers only 
 		$errors['quantity'] = true;	
+	}
+	
+	 //Writes the photo to the server 
+ 	if (!isset($_FILES['preview']['tmp_name'], $target)) { 
+		$errors['preview'] = true;
 	}
 	
 	if (empty($errors)) {
@@ -158,7 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		
 		<label for="notes">Notes</label>
 		<textarea name="notes" value="<?php echo $notes; ?>"></textarea>	
-		<input type="file" name="preview">
+		<input type="file" name="preview">   
+ 			<?php if (isset($errors['preview'])) : ?> <strong class="error"> Sorry, there was a problem uploading your file.</strong><?php endif; ?> 
 			
 		<button type="submit">Save</button>
 	</form>
