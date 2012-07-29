@@ -6,13 +6,13 @@ require_once 'selected.php';
 
 
 $sql = $db->query('
-	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes
+	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes, preview
 	FROM incontrol
 	ORDER BY cost ASC
 ');
 
 $sort_cost = $db->query('
-	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes
+	SELECT id, fabric_name, fibre_content, fibre_other, pattern, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes, preview
 	FROM incontrol
 	ORDER BY cost DESC
 ');
@@ -68,7 +68,7 @@ $results = $sql->fetchAll(); //gets data from db
 		</thead>
 		<?php foreach ($results as $fabric) :?>
 			<tr>
-				<td scope="col">preview image</td>
+				<td scope="col"><?php echo $fabric['preview']; ?></td>
 				<td scope="col"><a href="edit.php?id=<?php echo $fabric['id']; ?>"><?php echo $fabric['fabric_name']; ?></a></td>
 				<td scope="col">	
 				<?php echo $fibres[$fabric['fibre_content']] ?>

@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<h1>Add a Fabric</h1>
 	<p><a href="index.php">Cancel</a><p>
 
-	<form method="post" action="add-one.php">
+	<form enctype="multipart/form-data" method="post" action="add-one.php">
 		
 		<label for="fabric_name">Fabric Name<?php if (isset($errors['fabric_name'])) : ?> <strong class="error"> is required</strong><?php endif; ?></label>
 		<input name="fabric_name" id="fabric_name" required value="<?php echo $fabric_name; ?>"></input>
