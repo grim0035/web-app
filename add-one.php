@@ -8,17 +8,17 @@ $errors = array();
  $target = $target . basename( $_FILES['preview']['name']); 
  
  //This gets all the other information from the form 
- $image=($_FILES['preview']['name']);  
+ $preview=($_FILES['preview']['name']);  
  
 mysql_connect("localhost:8888/grim0035/web-app/", $user, $pass) or die(mysql_error()) ; 
 
  //Writes the photo to the server 
- if(move_uploaded_file($_FILES['preview']['tmp_name'], $target)) 
- { 
+// if(move_uploaded_file($_FILES['preview']['tmp_name'], $target)) 
+ //{
  
  //Tells you if its all ok 
- echo "The file ". basename( $_FILES['uploadedfile']['name']). " has been uploaded, and your information has been added to the directory"; 
- }		
+ //echo "The file ". basename( $_FILES['uploadedfile']['name']). " has been uploaded, and your information has been added to the directory"; 
+// }		
 
 
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
@@ -34,11 +34,9 @@ $c_units = filter_input(INPUT_POST, 'c_units', FILTER_SANITIZE_NUMBER_INT);
 $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
 $date_purchased = filter_input(INPUT_POST, 'date_purchased', FILTER_SANITIZE_NUMBER_INT);
 $notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
-$image = filter_input(INPUT_POST, 'preview', FILTER_SANITIZE_STRING);
+$preview = filter_input(INPUT_POST, 'preview', FILTER_SANITIZE_STRING);
 $tmp_name = filter_input(INPUT_POST, 'tmp_name', FILTER_SANITIZE_STRING);
 $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (strlen($fabric_name) < 1  || strlen($fabric_name) > 255) {
@@ -56,10 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (empty($errors)) {
 	// add to DB 
 		require_once 'includes/db.php';
+		move_uploaded_file($_FILES['preview']['tmp_name'], $target);
 		$sql = $db->prepare('
-		INSERT INTO incontrol (fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes, preview, tmp_name, name)
-		VALUES (:fabric_name, :fibre_content, :fibre_other, :pattern, :width, :width_other, :quantity, :q_units, :cost, :c_units, :location, :date_purchased, :notes, :preview, :tmp_name, :name)
+		INSERT INTO incontrol (fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes, preview, name)
+		VALUES (:fabric_name, :fibre_content, :fibre_other, :pattern, :width, :width_other, :quantity, :q_units, :cost, :c_units, :location, :date_purchased, :notes, :preview, :name)
 		'); 
+		
 		$sql->bindValue(':fabric_name', $fabric_name, PDO::PARAM_STR);
 		$sql->bindValue(':fibre_content', $fibre_content, PDO::PARAM_INT);		
 		$sql->bindValue(':fibre_other', $fibre_other, PDO::PARAM_STR);
@@ -73,11 +73,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$sql->bindValue(':location', $location, PDO::PARAM_STR);
 		$sql->bindValue(':date_purchased', $date_purchased, PDO::PARAM_INT);
 		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
-		$sql->bindValue(':preview', $image, PDO::PARAM_STR);
-		$sql->bindValue(':tmp_name', $tmp_name, PDO::PARAM_STR);
+		$sql->bindValue(':preview', $preview, PDO::PARAM_STR);
 		$sql->bindValue(':name', $name, PDO::PARAM_STR);
-$sql->execute();
+		$sql->execute();
 		
+
 		header('Location: index.php');
 		exit;
 	}
