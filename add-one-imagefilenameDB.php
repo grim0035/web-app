@@ -1,12 +1,14 @@
 <?php
 require_once 'selected.php';
-
+require_once 'includes/db.php';
 $errors = array(); 
  
  //This is the directory where images will be saved 
  $target = "images/"; 
  $target = $target . basename( $_FILES['preview']['name']); 
- 
+
+mysql_connect("localhost:8888/grim0035/web-app/", $user, $pass) or die(mysql_error()) ; 
+
  //This gets all the other information from the form 
  $image=($_FILES['preview']['name']);  
   
@@ -16,11 +18,6 @@ $errors = array();
  
  //Tells you if its all ok 
  echo "The file ". basename( $_FILES['uploadedfile']['name']). " has been uploaded, and your information has been added to the directory"; 
- } 
- else { 
- 
- //Gives and error if its not 
- echo "Sorry, there was a problem uploading your file."; 
  } 
 
 
