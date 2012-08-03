@@ -16,6 +16,7 @@ $sort_cost = $db->query('
 	FROM incontrol
 	ORDER BY cost DESC
 ');
+var_dump($db->errorInfo());
 
 $results = $sql->fetchAll(); //gets data from db
 
