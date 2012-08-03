@@ -10,7 +10,6 @@ $errors = array();
  //This gets all the other information from the form 
  $preview=($_FILES['preview']['name']);  
  
-mysql_connect("localhost:8888/grim0035/web-app/", $user, $pass) or die(mysql_error()) ; 
 
  //Writes the photo to the server 
 // if(move_uploaded_file($_FILES['preview']['tmp_name'], $target)) 
@@ -19,7 +18,6 @@ mysql_connect("localhost:8888/grim0035/web-app/", $user, $pass) or die(mysql_err
  //Tells you if its all ok 
  //echo "The file ". basename( $_FILES['uploadedfile']['name']). " has been uploaded, and your information has been added to the directory"; 
 // }		
-
 
 $fabric_name = filter_input(INPUT_POST, 'fabric_name', FILTER_SANITIZE_STRING);
 $fibre_content = filter_input(INPUT_POST, 'fibre_content', FILTER_SANITIZE_NUMBER_INT);
@@ -53,8 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 	if (empty($errors)) {
 	// add to DB 
+		//mysql_connect("localhost:8888/grim0035/web-app/", $user, $pass) or die(mysql_error()) ; 
+		//move_uploaded_file($_FILES['preview']['tmp_name'], $target);
+	
 		require_once 'includes/db.php';
-		move_uploaded_file($_FILES['preview']['tmp_name'], $target);
 		$sql = $db->prepare('
 		INSERT INTO incontrol (fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes, preview, name)
 		VALUES (:fabric_name, :fibre_content, :fibre_other, :pattern, :width, :width_other, :quantity, :q_units, :cost, :c_units, :location, :date_purchased, :notes, :preview, :name)
@@ -157,7 +157,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		
 		<label for="date_purchased">Date Purchased</label>
 		<input name="date_purchased" id="date_purchased" value="0000-00-00"></input>
-		
 		<label for="notes">Notes</label>
 		<textarea name="notes" value="<?php echo $notes; ?>"></textarea>	
 		<input type="file" name="preview">
@@ -166,6 +165,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
  	<button type="submit">Save</button>
 	</form>
 	</div>
-</div>	
+</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="js/jquery.js"></script>
 </body>
 </html>

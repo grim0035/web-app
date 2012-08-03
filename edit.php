@@ -88,6 +88,7 @@ $sql = $db->prepare('
 		$notes = $results['notes'];
 
 }
+//var_dump($fibres);
 
 ?><!DOCTYPE HTML>
 <html>
@@ -103,6 +104,7 @@ $sql = $db->prepare('
 		<h2>InControl > Inventory</h2>
 	<h1>Edit <?php echo $results['pattern'];?></h1>
 	<p><a href="index.php">Cancel</a></p>
+	
 	<form method="post" action="edit.php?id=<?php echo $id; ?>">
 		
 		<label for="fabric_name">Fabric Name<?php if (isset($errors['fabric_name'])) : ?> <strong class="error"> is required</strong><?php endif; ?></label>
@@ -115,7 +117,7 @@ $sql = $db->prepare('
 			<option value="<?php echo $key; echo 'selected="selected"'?>">	
 			 <?php echo $value;?>
 			</option> 
-				<?php endforeach; ?><!-- $value = array, $results['fibre_content'] = db entry. --><!-- <?php // echo $fibres[$results['fibre_content']]; // this spits out only db entry in a loop?> -->
+			<?php endforeach; ?><!-- $value = array, $results['fibre_content'] = db entry. --><!-- <?php // echo $fibres[$results['fibre_content']]; // this spits out only db entry in a loop?> -->
 		</select>	
 			
 		<label for="fibre_other">Other </label>
@@ -130,7 +132,7 @@ $sql = $db->prepare('
 			<option value="<?php echo $key; ?>">	
 			 <?php echo $value;?>
 			</option> 
-				<?php endforeach; ?>
+		<?php endforeach; ?>
 		</select>		
 		
 		<label for="width_other">Other</label>
@@ -144,7 +146,7 @@ $sql = $db->prepare('
 			<option value="<?php echo $key; ?>">	
 			 <?php echo $value;?>
 			</option> 
-				<?php endforeach; ?>
+		<?php endforeach; ?>
 		</select>	
 		
 		<label for="cost">Cost ($CDN)</label>
@@ -155,7 +157,7 @@ $sql = $db->prepare('
 			<option value="<?php echo $key; ?>">	
 			 <?php echo $value;?>
 			</option> 
-				<?php endforeach; ?>
+		<?php endforeach; ?>
 		</select>	
 		
 		<label for="location">Location Purchased</label>
@@ -171,5 +173,7 @@ $sql = $db->prepare('
 	</form>
 	</div>
 </div>
+
+
 </body>
 </html>
