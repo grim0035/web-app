@@ -1,6 +1,6 @@
 <?php
-require_once 'includes/db.php';
 require_once 'selected.php';
+require_once 'includes/db.php';
 
 $errors = array();
 
@@ -35,11 +35,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 	if (empty($errors)) {
 	// add to DB 
+		 $target = "images/"; 
+		 $target = $target . basename( $_FILES['preview']['name']); 
+		 
+		 //This gets the image information from the form 
+		 $preview=($_FILES['preview']['name']);  
+ 
+		move_uploaded_file($_FILES['preview']['tmp_name'], $target);
+	
 		require_once 'includes/db.php';
 		$sql = $db->prepare('
 		
 		UPDATE incontrol 
-		SET fabric_name = :fabric_name, fibre_content = :fibre_content, fibre_other = :fibre_other, pattern = :pattern, width = :width, width_other = :width_other, quantity = :quantity, q_units = :q_units, cost = :cost, c_units = :c_units, location = :location, date_purchased = :date_purchased, notes = :notes
+		SET fabric_name = :fabric_name, fibre_content = :fibre_content, fibre_other = :fibre_other, pattern = :pattern, width = :width, width_other = :width_other, quantity = :quantity, q_units = :q_units, cost = :cost, c_units = :c_units, location = :location, date_purchased = :date_purchased, notes = :notes, preview = :preview
 		WHERE id = :id 
 
 		'); 
@@ -57,6 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$sql->bindValue(':location', $location, PDO::PARAM_STR);
 		$sql->bindValue(':date_purchased', $date_purchased, PDO::PARAM_INT);
 		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
+		$sql->bindValue(':preview', $image, PDO::PARAM_STR);
+
 		$sql->execute();
 		
 		header('Location: index.php');
@@ -64,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 } else {
 $sql = $db->prepare('
-	SELECT fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes
+	SELECT fabric_name, fibre_content, fibre_other, pattern, width, width_other, quantity, q_units, cost, c_units, location, date_purchased, notes, preview
 	FROM incontrol
 	WHERE id = :id
 ');
@@ -86,7 +96,7 @@ $sql = $db->prepare('
 		$location = $results['location'];
 		$date_purchased = $results['date_purchased'];
 		$notes = $results['notes'];
-
+		$image = $results['preview'];
 }
 //var_dump($fibres);
 
@@ -167,7 +177,10 @@ $sql = $db->prepare('
 		<input name="date_purchased" id="date_purchased" value="<?php echo $date_purchased; ?>"></input>
 		
 		<label for="notes">Notes</label>
-		<textarea name="notes" ><?php echo $notes; ?></textarea>		
+		<textarea name="notes" ><?php echo $notes; ?></textarea>
+		<div class="preview"><img src="images/<?php echo $results['preview'] ?>"></div>
+		<input type="file" name="preview">
+	
 		<button type="submit">Save</button>
 
 	</form>

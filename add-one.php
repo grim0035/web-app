@@ -158,7 +158,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<textarea name="notes" value="<?php echo $notes; ?>"></textarea>	
 		<input type="file" name="preview">
 
-
  	<button type="submit">Save</button>
 	</form>
 	</div>

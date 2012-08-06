@@ -16,7 +16,8 @@ $sort_cost = $db->query('
 	FROM incontrol
 	ORDER BY cost DESC
 ');
-var_dump($db->errorInfo());
+
+//var_dump($db->errorInfo());
 
 $results = $sql->fetchAll(); //gets data from db
 
@@ -69,7 +70,7 @@ $results = $sql->fetchAll(); //gets data from db
 		</thead>
 		<?php foreach ($results as $fabric) :?>
 			<tr>
-				<td scope="col"><?php echo $fabric['preview']; ?></td>
+				<td scope="col"><img src="images/<?php echo $fabric['preview'] ?>"></td>
 				<td scope="col"><a href="edit.php?id=<?php echo $fabric['id']; ?>"><?php echo $fabric['fabric_name']; ?></a></td>
 				<td scope="col">	
 				<?php echo $fibres[$fabric['fibre_content']] ?>
