@@ -45,9 +45,6 @@ $results = $sql->fetchAll(); //gets data from db
 				<col>
 				<col>
 				<col>
-				<col>
-				<col>
-				<col>
 			</colgroup>
 		<thead> <!-- table header cells -->
 			<tr>
@@ -60,12 +57,8 @@ $results = $sql->fetchAll(); //gets data from db
 				<th scope="col">Width</th>
 				<th scope="col">Other</th>
 				<th scope="col">Quantity</th>
-				<th scope="col">q units</th>
 				<th scope="col"><a href="?sort_cost">Cost</a></th>
-				<th scope="col">c units</th>
-				<th scope="col">Location</th>
 				<th scope="col">Date</th>
-				<th scope="col">Notes</th>
 			</tr>
 		</thead>
 		<?php foreach ($results as $fabric) :?>
@@ -79,13 +72,9 @@ $results = $sql->fetchAll(); //gets data from db
 				<td scope="col"><a href="edit.php?id=<?php echo $fabric['id']; ?>"><?php echo $fabric['pattern']; ?></a></td>
 				<td scope="col"><?php echo $widths[$fabric['width']] ?></td>
 				<td scope="col"><?php echo $fabric['width_other']; ?></td>
-				<td scope="col"><?php echo $fabric['quantity']; ?></td>
-				<td scope="col"><?php echo $quantity_units[$fabric['q_units']] ?></td>
+				<td scope="col"><?php echo $fabric['quantity']; ?> <?php echo $quantity_units[$fabric['q_units']] ?></td>
 				<td scope="col"><?php echo $fabric['cost']; ?></td>
-				<td scope="col"><?php echo $cost_units[$fabric['c_units']] ?></td>
-				<td scope="col"><?php echo $fabric['location']; ?></td>
 				<td scope="col"><?php echo $fabric['date_purchased']; ?></td>
-				<td scope="col"><?php echo $fabric['notes']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 		<tfoot> <!-- table header cells -->
