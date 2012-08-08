@@ -4,9 +4,13 @@
 // Shared between all the PHP files in our application
 //never place username and passwords in this file. store them in the .htaccess file so they are not visible on GITHUB
 
-$user = getenv('DB_USER'); //MySQL username
-$pass = getenv('DB_PASS'); //MySQL password
-$data_source = getenv('DATA_SOURCE');
+$user = getenv('MYSQL_USERNAME'); //MySQL username
+$pass = getenv('MYSQL_PASSWORD'); //MySQL password
+
+$host = getenv('MYSQL_DB_HOST');
+$dbname = getenv('MYSQL_DB_NAME');
+
+$data_source = sprintf('mysql:host=%s;dbname=%s', $host, $dbname);
 
 //PDO: PHP Data Objects
 // Allows us to connect to many different kinds of databases
