@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		 $target = "images/"; 
 		 $target = $target . basename( $_FILES['preview']['name']); 
 		 
-		 //This gets all the other information from the form 
+		 //This gets the image information from the form 
 		 $preview=($_FILES['preview']['name']);  
  
 		move_uploaded_file($_FILES['preview']['tmp_name'], $target);
@@ -75,8 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$sql->execute();
 		
 
-		//header('Location: index.php');
-		//exit;
+		header('Location: index.php');
+		exit;
 	}
 }
 

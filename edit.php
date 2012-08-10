@@ -13,12 +13,12 @@ $width = filter_input(INPUT_POST, 'width', FILTER_SANITIZE_NUMBER_INT);
 $width_other = filter_input(INPUT_POST, 'width_other', FILTER_SANITIZE_STRING);
 $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_FLAG_ALLOW_FRACTION allows decimals
 $q_units = filter_input(INPUT_POST, 'q_units', FILTER_SANITIZE_NUMBER_INT); 
-$cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+$cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); 
 $c_units = filter_input(INPUT_POST, 'c_units', FILTER_SANITIZE_NUMBER_INT); 
 $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
 $date_purchased = filter_input(INPUT_POST, 'date_purchased', FILTER_SANITIZE_NUMBER_INT);
 $notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
-
+//$preview = filter_input(INPUT_POST, 'preview', FILTER_SANITIZE_STRING);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (strlen($fabric_name) < 1  || strlen($fabric_name) > 255) {
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$sql->bindValue(':location', $location, PDO::PARAM_STR);
 		$sql->bindValue(':date_purchased', $date_purchased, PDO::PARAM_INT);
 		$sql->bindValue(':notes', $notes, PDO::PARAM_STR);
-		$sql->bindValue(':preview', $image, PDO::PARAM_STR);
+		$sql->bindValue(':preview', $preview, PDO::PARAM_STR);
 
 		$sql->execute();
 		
@@ -96,7 +96,7 @@ $sql = $db->prepare('
 		$location = $results['location'];
 		$date_purchased = $results['date_purchased'];
 		$notes = $results['notes'];
-		$image = $results['preview'];
+		$preview = $results['preview'];
 }
 //var_dump($fibres);
 
@@ -115,7 +115,7 @@ $sql = $db->prepare('
 	<h1>Edit <?php echo $results['pattern'];?></h1>
 	<p><a href="index.php">Cancel</a></p>
 	
-	<form method="post" action="edit.php?id=<?php echo $id; ?>">
+	<form enctype="multipart/form-data" method="post" action="edit.php?id=<?php echo $id; ?>">
 		
 		<label for="fabric_name">Fabric Name<?php if (isset($errors['fabric_name'])) : ?> <strong class="error"> is required</strong><?php endif; ?></label>
 		<input name="fabric_name" id="fabric_name" required value="<?php echo $fabric_name; ?>"></input>
@@ -178,7 +178,7 @@ $sql = $db->prepare('
 		
 		<label for="notes">Notes</label>
 		<textarea name="notes" ><?php echo $notes; ?></textarea>
-		<div class="preview"><img src="images/<?php echo $results['preview'] ?>"></div>
+		<div class="preview"><p><img src="images/<?php echo $results['preview'] ?>"></p></div>
 		<input type="file" name="preview">
 	
 		<button type="submit">Save</button>
@@ -187,6 +187,7 @@ $sql = $db->prepare('
 	</div>
 </div>
 
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="js/jquery.js"></script>
 </body>
 </html>
