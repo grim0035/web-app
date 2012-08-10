@@ -50,7 +50,7 @@ $results = $sql->fetchAll(); //gets data from db
 			<tr>
 				<!-- table =scope defines what direction the <th> is labelling: col or row -->
 				<th scope="col">Preview</th>
-				<th scope="col"><a href="index.php?sort_name=desc">Name</a></th>
+				<th scope="col"><a href="index.php?sort_name">Name</a></th>
 				<th scope="col">Fibre Content</th>
 				<th scope="col">Other</th>
 				<th scope="col">Pattern</th>
