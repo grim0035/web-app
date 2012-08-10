@@ -1,4 +1,8 @@
 <?php
+/**
+ * This is a DocBlock comment
+ */
+
 require_once 'selected.php';
 require_once 'includes/db.php';
 
