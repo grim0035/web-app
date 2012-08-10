@@ -3,6 +3,7 @@ require_once 'selected.php';
 require_once 'includes/db.php';
 
 $errors = array(); 
+//var_dump($db->errorInfo());
 
  //Writes the photo to the server 
 // if(move_uploaded_file($_FILES['preview']['tmp_name'], $target)) 

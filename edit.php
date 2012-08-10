@@ -20,6 +20,9 @@ $date_purchased = filter_input(INPUT_POST, 'date_purchased', FILTER_SANITIZE_NUM
 $notes = filter_input(INPUT_POST, 'notes', FILTER_SANITIZE_STRING);
 //$preview = filter_input(INPUT_POST, 'preview', FILTER_SANITIZE_STRING);
 
+//var_dump($db->errorInfo());
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (strlen($fabric_name) < 1  || strlen($fabric_name) > 255) {
 		$errors['fabric_name'] = true;	
