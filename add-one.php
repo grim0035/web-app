@@ -1,8 +1,15 @@
 <?php
 /**
- * This is a DocBlock comment
- */
-
+* adds one entry into InControl table of MySQL databse.
+* @project lucylou.phpfogapp.com
+* @author Scott Grimes <grim0035@algonquinlive.com>
+* @link http://lucylou.phpfogapp.com
+* @link http://scottgrimesdesign.com
+* @copyright Copyright MMXII–, Scott Grimes
+* @license BSD 3-Clause license
+* @link https://github.com/grim0035/web-app/blob/master/license.txt
+* @version 1.0.0
+*/
 require_once 'selected.php';
 require_once 'includes/db.php';
 
