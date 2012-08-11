@@ -26,7 +26,7 @@ v.1.0.0
 *Select any inventory to display and edit it's properties.
 
 ###License
-InControl is licensed under the [BSD 3-Clause license]<https://github.com/grim0035/web-app/blob/master/license.txt>.
+InControl is licensed under the [BSD 3-Clause license <https://github.com/grim0035/web-app/blob/master/license.txt>].
 
 ###Copyright 
 copyright 2012 Scott Grimes
