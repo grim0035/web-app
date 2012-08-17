@@ -11,8 +11,8 @@
 * @version 1.0.0
 */
 
-require_once 'includes/selected.php';
 require_once 'includes/db.php';
+require_once 'selected.php';
 
 //pointer to db
 

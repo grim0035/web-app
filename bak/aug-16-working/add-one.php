@@ -10,7 +10,7 @@
 * @link https://github.com/grim0035/web-app/blob/master/license.txt
 * @version 1.0.0
 */
-require_once 'includes/selected.php';
+require_once 'selected.php';
 require_once 'includes/db.php';
 
 $errors = array(); 
